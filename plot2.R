@@ -14,14 +14,16 @@ unlink(temp)
 ## subset for dates needed
 
 df2 <- subset(df, Date == "1/2/2007" | Date == "2/2/2007")
-plotdata <- as.numeric(df2$Global_active_power)
+
+df2$DT <- strptime(paste(df2$Date,df2$Time), format="%d/%m/%Y %H:%M:%S")
 
 
 ## Start PNG
-png(filename = "plot1.png")
+png(filename = "plot2.png")
 
-## plot a histogram
-hist(plotdata, xlab = "Global Active Power (kilowatts)", col = "red", main = "Global Active Power")
+## plot the time series chart
+with(df2, plot(DT, Global_active_power, type="l", ylab = "Global Active Power (kilowatts)", xlab = ""))
 
-##  Make a PNG copy
+## Make a PNG copy
 dev.off()
+
